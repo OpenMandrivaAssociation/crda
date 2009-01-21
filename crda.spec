@@ -6,6 +6,7 @@ License:	ISC
 Group:		System/Configuration/Hardware
 URL:		http://linuxwireless.org/en/developers/Regulatory/CRDA
 Source:		http://wireless.kernel.org/download/crda/crda-%{version}.tar.bz2
+Requires:	udev
 Requires:	wireless-regdb
 BuildRequires:	libgcrypt-devel
 BuildRequires:	libnl-devel
