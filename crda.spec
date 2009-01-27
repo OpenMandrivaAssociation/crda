@@ -1,5 +1,5 @@
 Name:		crda
-Version:	0.9.5
+Version:	1.0.1
 Release:	%mkrel 1
 Summary:	Software to upload wireless regulatory information into kernel
 License:	ISC
@@ -36,7 +36,9 @@ mkdir -p %{buildroot}%{_prefix}/lib/crda
 %defattr(0644,root,root,0755)
 %doc LICENSE
 %dir %{_prefix}/lib/crda
-%{_sysconfdir}/udev/rules.d/regulatory.rules
+%{_mandir}/man8/crda.8*
+%{_mandir}/man8/regdbdump.8*
+/lib/udev/rules.d/85-regulatory.rules
 %defattr(0755,root,root,0755)
 /sbin/crda
 /sbin/regdbdump
