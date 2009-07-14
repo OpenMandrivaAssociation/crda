@@ -1,5 +1,5 @@
 Name:		crda
-Version:	1.0.1
+Version:	1.1.0
 Release:	%mkrel 1
 Summary:	Software to upload wireless regulatory information into kernel
 License:	ISC
