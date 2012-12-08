@@ -1,17 +1,18 @@
 Name:		crda
 Version:	1.1.2
-Release:	2
+Release:	%mkrel 1
 Summary:	Software to upload wireless regulatory information into kernel
 License:	ISC
 Group:		System/Configuration/Hardware
 URL:		http://linuxwireless.org/en/developers/Regulatory/CRDA
-Source:		http://wireless.kernel.org/download/crda/crda-%{version}.tar.bz2
-BuildRequires:	libgcrypt-devel
-BuildRequires:	libnl3-devel
-BuildRequires:	python-m2crypto
-BuildRequires:	wireless-regdb
+Source0:	http://wireless.kernel.org/download/crda/crda-%{version}.tar.bz2
 Requires:	udev
 Requires:	wireless-regdb
+BuildRequires:	libgcrypt-devel
+BuildRequires:	pkgconfig(libnl-3.0)
+BuildRequires:	python-m2crypto
+BuildRequires:	wireless-regdb
+Patch0:		libnl31-support.diff
 
 %description
 CRDA acts as the udev helper for communication between the kernel and
@@ -22,19 +23,19 @@ manually except if debugging udev issues.
 
 %prep
 %setup -q
+%patch0 -p2
 
 %build
-# (tpg) use libnl3
-sed -i -e 's#NLLIBS += -lnl-genl#NLLIBS += -lnl-genl-3#g' Makefile
-
-%setup_compile_flags
-%make V=1
+export CFLAGS="%{optflags}"
+%make 
+#CFLAGS="%{optflags}" V=1
 
 %install
 %makeinstall_std
 mkdir -p %{buildroot}%{_prefix}/lib/crda
 
 %files
+%defattr(0644,root,root,0755)
 %doc LICENSE
 %dir %{_prefix}/lib/crda
 %{_mandir}/man8/crda.8*
