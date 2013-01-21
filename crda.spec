@@ -1,6 +1,6 @@
 Name:		crda
-Version:	1.1.2
-Release:	2
+Version:	1.1.3
+Release:	1
 Summary:	Software to upload wireless regulatory information into kernel
 License:	ISC
 Group:		System/Configuration/Hardware
@@ -12,7 +12,6 @@ BuildRequires:	libgcrypt-devel
 BuildRequires:	pkgconfig(libnl-3.0)
 BuildRequires:	python-m2crypto
 BuildRequires:	wireless-regdb
-Patch0:		libnl31-support.diff
 
 %description
 CRDA acts as the udev helper for communication between the kernel and
@@ -23,7 +22,7 @@ manually except if debugging udev issues.
 
 %prep
 %setup -q
-%patch0 -p2
+#% patch0 -p2
 
 %build
 export CFLAGS="%{optflags}"
