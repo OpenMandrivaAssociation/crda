@@ -1,7 +1,7 @@
 Summary:	Software to upload wireless regulatory information into kernel
 Name:		crda
 Version:	1.1.3
-Release:	6
+Release:	7
 License:	ISC
 Group:		System/Configuration/Hardware
 Url:		http://linuxwireless.org/en/developers/Regulatory/CRDA
