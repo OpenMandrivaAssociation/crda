@@ -6,6 +6,8 @@ License:	ISC
 Group:		System/Configuration/Hardware
 Url:		http://linuxwireless.org/en/developers/Regulatory/CRDA
 Source0:	http://wireless.kernel.org/download/crda/%{name}-%{version}.tar.bz2
+Source1:	keys-ssl.c
+Patch0:		crda-1.1.3-missing-include.patch
 
 BuildRequires:	python-m2crypto
 BuildRequires:	wireless-regdb
@@ -23,14 +25,14 @@ manually except if debugging udev issues.
 
 %prep
 %setup -q
-sed -i 's/python/python2/g' utils/key2pub.py
+cp %{SOURCE1} .
+%apply_patches
 
 %build
 export CFLAGS="%{optflags}"
-%make CC=%{__cc}
-
+%make CC=%{__cc} USE_OPENSSL=1
 %install
-%makeinstall_std
+%makeinstall_std USE_OPENSSL=1
 mkdir -p %{buildroot}%{_prefix}/lib/crda
 
 %files
