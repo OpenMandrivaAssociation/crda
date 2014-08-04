@@ -23,10 +23,11 @@ manually except if debugging udev issues.
 
 %prep
 %setup -q
+sed -i 's/python/python2/g' utils/key2pub.py
 
 %build
 export CFLAGS="%{optflags}"
-%make 
+%make CC=%{__cc}
 
 %install
 %makeinstall_std
