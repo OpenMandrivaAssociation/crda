@@ -12,6 +12,7 @@ Patch0:		crda-1.1.3-missing-include.patch
 BuildRequires:	python-m2crypto
 BuildRequires:	wireless-regdb
 BuildRequires:	pkgconfig(libgcrypt)
+BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(libnl-3.0)
 Requires:	udev
 Requires:	wireless-regdb
