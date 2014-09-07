@@ -36,6 +36,9 @@ export CFLAGS="%{optflags}"
 %makeinstall_std USE_OPENSSL=1
 mkdir -p %{buildroot}%{_prefix}/lib/crda
 
+%check
+%make USE_OPENSSL=1 CC="%{__cc}" verify
+
 %files
 %doc LICENSE
 %dir %{_prefix}/lib/crda
