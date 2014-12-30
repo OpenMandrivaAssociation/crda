@@ -1,11 +1,11 @@
 Summary:	Software to upload wireless regulatory information into kernel
 Name:		crda
-Version:	1.1.3
-Release:	11
+Version:	1.13
+Release:	1
 License:	ISC
 Group:		System/Configuration/Hardware
 Url:		http://linuxwireless.org/en/developers/Regulatory/CRDA
-Source0:	http://wireless.kernel.org/download/crda/%{name}-%{version}.tar.bz2
+Source0:	https://www.kernel.org/pub/software/network/crda/%{name}-%{version}.tar.xz
 Source1:	keys-ssl.c
 Patch0:		crda-1.1.3-missing-include.patch
 
@@ -30,7 +30,8 @@ cp %{SOURCE1} .
 %apply_patches
 
 %build
-export CFLAGS="%{optflags}"
+%setup_compile_flags
+
 %make CC=%{__cc} USE_OPENSSL=1
 %install
 %makeinstall_std USE_OPENSSL=1
