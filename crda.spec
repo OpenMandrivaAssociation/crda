@@ -30,7 +30,8 @@ cp %{SOURCE1} .
 %build
 %setup_compile_flags
 
-%make CC=%{__cc} USE_OPENSSL=1
+%make -j1 CC=%{__cc} USE_OPENSSL=1
+
 %install
 %makeinstall_std USE_OPENSSL=1
 mkdir -p %{buildroot}%{_prefix}/lib/crda
