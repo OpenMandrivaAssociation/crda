@@ -37,7 +37,7 @@ cp %{SOURCE1} .
 mkdir -p %{buildroot}%{_prefix}/lib/crda
 
 %check
-%make USE_OPENSSL=1 CC="%{__cc}" verify
+make USE_OPENSSL=1 CC="%{__cc}" verify
 
 %files
 %doc LICENSE
