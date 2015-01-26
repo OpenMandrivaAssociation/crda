@@ -30,7 +30,7 @@ cp %{SOURCE1} .
 %build
 %setup_compile_flags
 
-%make --output-sync=none CC=%{__cc} USE_OPENSSL=1
+make CC=%{__cc} USE_OPENSSL=1
 
 %install
 %makeinstall_std USE_OPENSSL=1
