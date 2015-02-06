@@ -1,12 +1,20 @@
 diff -Naur crda-3.18/Makefile crda-3.18.tpg/Makefile
 --- crda-3.18/Makefile	2014-12-10 23:51:29.000000000 +0000
-+++ crda-3.18.tpg/Makefile	2015-02-06 16:30:53.982945846 +0000
-@@ -129,7 +129,7 @@
- 	$(Q)cp $(LIBREG) $(DESTDIR)/$(LIBDIR)/
- 	$(Q)ldconfig
++++ crda-3.18.tpg/Makefile	2015-02-06 16:59:43.527686006 +0000
+@@ -114,7 +114,7 @@
+ 	$(NQ) '  Trusted pubkeys:' $(wildcard $(PUBKEY_DIR)/*.pem)
+ 	$(Q)./utils/key2pub.py --$* $(wildcard $(PUBKEY_DIR)/*.pem) $@
  
--%.o: %.c regdb.h $(LIBREG)
-+%.o: %.c regdb.h
+-$(LIBREG): regdb.h reglib.h reglib.c
++$(LIBREG): reglib.c
  	$(NQ) '  CC  ' $@
- 	$(Q)$(CC) -c $(CPPFLAGS) $(CFLAGS) -o $@ $<
+ 	$(Q)$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -shared -Wl,-soname,$(LIBREG) $^
  
+@@ -127,7 +127,6 @@
+ 	$(NQ) '  INSTALL  libreg'
+ 	$(Q)mkdir -p $(DESTDIR)/$(LIBDIR)
+ 	$(Q)cp $(LIBREG) $(DESTDIR)/$(LIBDIR)/
+-	$(Q)ldconfig
+ 
+ %.o: %.c regdb.h $(LIBREG)
+ 	$(NQ) '  CC  ' $@

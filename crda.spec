@@ -30,6 +30,7 @@ cp %{SOURCE1} .
 
 %build
 %setup_compile_flags
+sed -i -e 's|^#!/usr/bin/env python|#!%{__python2}|' utils/key2pub.py
 
 make CC=%{__cc} USE_OPENSSL=1
 
