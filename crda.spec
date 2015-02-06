@@ -7,7 +7,7 @@ Group:		System/Configuration/Hardware
 Url:		http://linuxwireless.org/en/developers/Regulatory/CRDA
 Source0:	https://www.kernel.org/pub/software/network/crda/%{name}-%{version}.tar.xz
 Source1:	keys-ssl.c
-
+Patch0:		crda-3.18-fix-makefile.patch
 BuildRequires:	python-m2crypto
 BuildRequires:	wireless-regdb
 BuildRequires:	pkgconfig(libgcrypt)
@@ -25,6 +25,7 @@ manually except if debugging udev issues.
 
 %prep
 %setup -q
+%apply_patches
 cp %{SOURCE1} .
 
 %build

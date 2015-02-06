@@ -1,0 +1,12 @@
+diff -Naur crda-3.18/Makefile crda-3.18.tpg/Makefile
+--- crda-3.18/Makefile	2014-12-10 23:51:29.000000000 +0000
++++ crda-3.18.tpg/Makefile	2015-02-06 16:30:53.982945846 +0000
+@@ -129,7 +129,7 @@
+ 	$(Q)cp $(LIBREG) $(DESTDIR)/$(LIBDIR)/
+ 	$(Q)ldconfig
+ 
+-%.o: %.c regdb.h $(LIBREG)
++%.o: %.c regdb.h
+ 	$(NQ) '  CC  ' $@
+ 	$(Q)$(CC) -c $(CPPFLAGS) $(CFLAGS) -o $@ $<
+ 
