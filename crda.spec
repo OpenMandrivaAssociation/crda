@@ -7,7 +7,11 @@ Group:		System/Configuration/Hardware
 Url:		http://linuxwireless.org/en/developers/Regulatory/CRDA
 Source0:	https://www.kernel.org/pub/software/network/crda/%{name}-%{version}.tar.xz
 Source1:	keys-ssl.c
-Patch0:		crda-3.18-fix-makefile.patch
+Patch0:		crda-3.18-no-ldconfig.patch
+Patch1:		crda-3.18-no-werror.patch
+Patch2:		crda-3.18-openssl.patch
+Patch3:		crda-3.18-cflags.patch
+Patch4:		crda-3.18-libreg-link.patch
 BuildRequires:	python-m2crypto
 BuildRequires:	wireless-regdb
 BuildRequires:	pkgconfig(libgcrypt)
@@ -32,7 +36,7 @@ cp %{SOURCE1} .
 %setup_compile_flags
 sed -i -e 's|^#!/usr/bin/env python|#!%{__python2}|' utils/key2pub.py
 
-make CC=%{__cc} USE_OPENSSL=1
+make CC=%{__cc} PREFIX=%{_prefix} SBINDIR=%{_sbindir} LIBDIR=%{_libdir} WERROR= USE_OPENSSL=1
 
 %install
 %makeinstall_std USE_OPENSSL=1
