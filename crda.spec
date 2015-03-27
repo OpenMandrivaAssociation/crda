@@ -75,6 +75,7 @@ make USE_OPENSSL=1 CC="%{__cc}" verify
 /lib/udev/rules.d/85-regulatory.rules
 # A symlink, in case any applications still need crda in /sbin
 /sbin/crda
+%{_sbindir}/crda
 %{_sbindir}/regdbdump
 %{_sbindir}/setregdomain
 %{_libdir}/libreg.so
