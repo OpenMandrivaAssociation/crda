@@ -36,6 +36,13 @@ communication. CRDA is intended to be run only through udev
 communication from the kernel. The user should never have to run it
 manually except if debugging udev issues.
 
+%package devel
+Summary:	Header files for use with libreg from CRDA
+Group:		Development/C
+
+%description devel
+Header files to make use of libreg for accessing regulatory info.
+
 %prep
 %setup -q
 %apply_patches
@@ -52,6 +59,10 @@ mkdir -p %{buildroot}%{_prefix}/lib/crda
 install -D -pm 0755 %{SOURCE1} %{buildroot}%{_sbindir}
 install -D -pm 0644 %{SOURCE2} %{buildroot}%{_mandir}/man1/setregdomain.1
 
+#Just in case any applications need crda exactly in /sbin
+mkdir -p %{buildroot}/sbin/
+ln -s %{_sbindir}/crda %{buildroot}/sbin/
+
 %check
 make USE_OPENSSL=1 CC="%{__cc}" verify
 
@@ -62,7 +73,13 @@ make USE_OPENSSL=1 CC="%{__cc}" verify
 %{_mandir}/man8/crda.8*
 %{_mandir}/man8/regdbdump.8*
 /lib/udev/rules.d/85-regulatory.rules
+# A symlink, in case any applications still need crda in /sbin
 /sbin/crda
-/sbin/regdbdump
+%{_sbindir}/regdbdump
 %{_sbindir}/setregdomain
+%{_libdir}/libreg.so
 
+%files devel
+%{_includedir}/reglib/nl80211.h
+%{_includedir}/reglib/regdb.h
+%{_includedir}/reglib/reglib.h
