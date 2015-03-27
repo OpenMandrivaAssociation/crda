@@ -1,0 +1,12 @@
+diff -Naur crda-3.18/Makefile crda-3.18.tpg/Makefile
+--- crda-3.18/Makefile	2015-03-27 00:16:25.000000000 +0000
++++ crda-3.18.tpg/Makefile	2015-03-27 00:18:59.980081601 +0000
+@@ -115,7 +115,7 @@
+ 	$(NQ) '  Trusted pubkeys:' $(wildcard $(PUBKEY_DIR)/*.pem)
+ 	$(Q)./utils/key2pub.py --$* $(wildcard $(PUBKEY_DIR)/*.pem) $@
+ 
+-$(LIBREG): regdb.h reglib.h reglib.c
++$(LIBREG): reglib.c
+ 	$(NQ) '  CC  ' $@
+ 	$(Q)$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -shared -Wl,-soname,$(LIBREG) $^ $(filter-out -lreg,$(LDLIBS))
+ 

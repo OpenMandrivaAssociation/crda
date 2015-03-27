@@ -12,6 +12,7 @@ Patch1:		crda-3.18-no-werror.patch
 Patch2:		crda-3.18-openssl.patch
 Patch3:		crda-3.18-cflags.patch
 Patch4:		crda-3.18-libreg-link.patch
+Patch5:		crda-3.18-remove-not-needed-headers.patch
 BuildRequires:	python-m2crypto
 BuildRequires:	wireless-regdb
 BuildRequires:	pkgconfig(libgcrypt)
