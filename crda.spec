@@ -6,13 +6,21 @@ License:	ISC
 Group:		System/Configuration/Hardware
 Url:		http://linuxwireless.org/en/developers/Regulatory/CRDA
 Source0:	https://www.kernel.org/pub/software/network/crda/%{name}-%{version}.tar.xz
-Source1:	keys-ssl.c
-Patch0:		crda-3.18-no-ldconfig.patch
-Patch1:		crda-3.18-no-werror.patch
-Patch2:		crda-3.18-openssl.patch
-Patch3:		crda-3.18-cflags.patch
-Patch4:		crda-3.18-libreg-link.patch
-Patch5:		crda-3.18-remove-not-needed-headers.patch
+# From Fedora.
+# This script sets regulatory domain for a country based on the 
+# current time zone.
+# '/usr/sbin/iw' was replaced with just 'iw'.
+Source1:	setregdomain
+Source2:	setregdomain.1
+# Adapted from Fedora
+# Add udev rule to call setregdomain on wireless device add.
+Patch0:		regulatory-rules-setregdomain.patch
+Patch1:		crda-3.18-no-ldconfig.patch
+Patch2:		crda-3.18-no-werror.patch
+Patch3:		crda-3.18-openssl.patch
+Patch4:		crda-3.18-cflags.patch
+Patch5:		crda-3.18-libreg-link.patch
+Patch6:		crda-3.18-remove-not-needed-headers.patch
 BuildRequires:	python-m2crypto
 BuildRequires:	wireless-regdb
 BuildRequires:	pkgconfig(libgcrypt)
@@ -31,7 +39,6 @@ manually except if debugging udev issues.
 %prep
 %setup -q
 %apply_patches
-cp %{SOURCE1} .
 
 %build
 %setup_compile_flags
@@ -42,6 +49,8 @@ make CC=%{__cc} PREFIX=%{_prefix} SBINDIR=%{_sbindir} LIBDIR=%{_libdir} WERROR= 
 %install
 %makeinstall_std USE_OPENSSL=1
 mkdir -p %{buildroot}%{_prefix}/lib/crda
+install -D -pm 0755 %{SOURCE1} %{buildroot}%{_sbindir}
+install -D -pm 0644 %{SOURCE2} %{buildroot}%{_mandir}/man1/setregdomain.1
 
 %check
 make USE_OPENSSL=1 CC="%{__cc}" verify
@@ -49,9 +58,11 @@ make USE_OPENSSL=1 CC="%{__cc}" verify
 %files
 %doc LICENSE
 %dir %{_prefix}/lib/crda
+%{_mandir}/man1/setregdomain.1*
 %{_mandir}/man8/crda.8*
 %{_mandir}/man8/regdbdump.8*
 /lib/udev/rules.d/85-regulatory.rules
 /sbin/crda
 /sbin/regdbdump
+%{_sbindir}/setregdomain
 
