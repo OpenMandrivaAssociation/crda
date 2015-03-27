@@ -54,7 +54,7 @@ sed -i -e 's|^#!/usr/bin/env python|#!%{__python2}|' utils/key2pub.py
 make CC=%{__cc} PREFIX=%{_prefix} SBINDIR=%{_sbindir} LIBDIR=%{_libdir} WERROR= USE_OPENSSL=1
 
 %install
-%makeinstall_std USE_OPENSSL=1
+%makeinstall_std MANDIR=%{_mandir}/ SBINDIR=%{_sbindir}/ LIBDIR=%{_libdir}/ USE_OPENSSL=1
 mkdir -p %{buildroot}%{_prefix}/lib/crda
 install -D -pm 0755 %{SOURCE1} %{buildroot}%{_sbindir}
 install -D -pm 0644 %{SOURCE2} %{buildroot}%{_mandir}/man1/setregdomain.1
