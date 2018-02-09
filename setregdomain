@@ -21,23 +21,23 @@ LOCALTIME=/etc/localtime
 LOGGER="/bin/logger -t crda"
 
 getcountry() {
-    while read c a z r
+    while read -r c a z r
     do
 	if [ "$z" = "$ZONE" ]
 	then
-	    echo $c
+	    printf '%s\n' "$c"
 	    break
 	fi
     done < /usr/share/zoneinfo/zone.tab
 }
 
-if [ -f $REGDOMAIN ]
+if [ -f "$REGDOMAIN" ]
 then
     # This should set COUNTRY
-    . $REGDOMAIN
+    . "$REGDOMAIN"
     if [ -n "$COUNTRY" ]
     then
-	/sbin/iw reg set $COUNTRY
+	/sbin/iw reg set "$COUNTRY"
 	exit
     fi
 fi
@@ -51,7 +51,7 @@ else
     exit 1
 fi
 
-if [ -z "$ZONE" -o "$ZONE" = "$LOCALTIME" ]
+if [ -z "$ZONE"] || [ "$ZONE" = "$LOCALTIME" ]
 then
     $LOGGER -s "Could not determine timezone!  Unable to set regulatory domain."
     exit 1
@@ -66,4 +66,4 @@ then
 fi
 
 $LOGGER "setting regulatory domain to $COUNTRY based on timezone ($ZONE)"
-/sbin/iw reg set $COUNTRY
+/sbin/iw reg set "$COUNTRY"
