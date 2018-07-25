@@ -24,9 +24,10 @@ Patch6:		crda-3.18-remove-not-needed-headers.patch
 BuildRequires:	python-m2crypto
 BuildRequires:	wireless-regdb
 BuildRequires:	pkgconfig(libgcrypt)
-BuildRequires:	pkgconfig(openssl)
+#BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(libnl-3.0)
 Requires:	udev
+Requires:	iw
 Requires:	wireless-regdb
 
 %description
@@ -51,10 +52,11 @@ Header files to make use of libreg for accessing regulatory info.
 %setup_compile_flags
 sed -i -e 's|^#!/usr/bin/env python|#!%{__python2}|' utils/key2pub.py
 
-make CC=%{__cc} PREFIX=%{_prefix} SBINDIR=%{_sbindir} LIBDIR=%{_libdir} WERROR= USE_OPENSSL=1
+make CC=%{__cc} PREFIX=%{_prefix} SBINDIR=%{_sbindir} LIBDIR=%{_libdir} WERROR= USE_OPENSSL=0
 
 %install
-%makeinstall_std MANDIR=%{_mandir}/ SBINDIR=%{_sbindir}/ LIBDIR=%{_libdir}/ USE_OPENSSL=1
+%makeinstall_std MANDIR=%{_mandir}/ SBINDIR=%{_sbindir}/ LIBDIR=%{_libdir}/ USE_OPENSSL=0
+
 mkdir -p %{buildroot}%{_prefix}/lib/crda
 install -D -pm 0755 %{SOURCE1} %{buildroot}%{_sbindir}
 install -D -pm 0644 %{SOURCE2} %{buildroot}%{_mandir}/man1/setregdomain.1
@@ -64,7 +66,7 @@ mkdir -p %{buildroot}/sbin/
 ln -s %{_sbindir}/crda %{buildroot}/sbin/
 
 %check
-make USE_OPENSSL=1 CC="%{__cc}" verify
+make USE_OPENSSL=0 CC="%{__cc}" verify
 
 %files
 %doc LICENSE
