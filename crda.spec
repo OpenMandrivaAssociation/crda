@@ -1,7 +1,7 @@
 Summary:	Software to upload wireless regulatory information into kernel
 Name:		crda
 Version:	3.18
-Release:	5
+Release:	6
 License:	ISC
 Group:		System/Configuration/Hardware
 Url:		http://linuxwireless.org/en/developers/Regulatory/CRDA
@@ -45,17 +45,16 @@ Group:		Development/C
 Header files to make use of libreg for accessing regulatory info.
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 
 %build
 %setup_compile_flags
 sed -i -e 's|^#!/usr/bin/env python|#!%{__python2}|' utils/key2pub.py
 
-make CC=%{__cc} PREFIX=%{_prefix} SBINDIR=%{_sbindir} LIBDIR=%{_libdir} WERROR= USE_OPENSSL=0
+%make_build -j1 CC=%{__cc} PREFIX=%{_prefix} SBINDIR=%{_sbindir} LIBDIR=%{_libdir} WERROR= USE_OPENSSL=0
 
 %install
-%makeinstall_std MANDIR=%{_mandir}/ SBINDIR=%{_sbindir}/ LIBDIR=%{_libdir}/ USE_OPENSSL=0
+%make_install MANDIR=%{_mandir}/ SBINDIR=%{_sbindir}/ LIBDIR=%{_libdir}/ USE_OPENSSL=0
 
 mkdir -p %{buildroot}%{_prefix}/lib/crda
 install -D -pm 0755 %{SOURCE1} %{buildroot}%{_sbindir}
