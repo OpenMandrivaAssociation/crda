@@ -4,7 +4,7 @@ Version:	3.18
 Release:	ZED'S DEAD BABY
 License:	ISC
 Group:		System/Configuration/Hardware
-Url:		http://linuxwireless.org/en/developers/Regulatory/CRDA
+Url:		https://linuxwireless.org/en/developers/Regulatory/CRDA
 Source0:	https://www.kernel.org/pub/software/network/crda/%{name}-%{version}.tar.xz
 # From Fedora.
 # This script sets regulatory domain for a country based on the 
